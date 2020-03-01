@@ -8,7 +8,7 @@ from time import sleep
 
 import requests
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -107,23 +107,29 @@ class ScriptScraper():
             # Downside is that it now picks up the 18 genres + the film genres
             # Easy enough to deal with in post
             genre_inter = []
-            for i in self.driver.find_elements_by_xpath('//a[contains(@href, "/genre")]'):
-                genre_inter.append(i.get_attribute('text'))
-            self.movie_genres.append(genre_inter)
+            try:
+                for i in self.driver.find_elements_by_xpath('//a[contains(@href, "/genre")]'):
+                    genre_inter.append(i.get_attribute('text'))
+                self.movie_genres.append(genre_inter)
+            except NoSuchElementException:
+                self.movie_genres.append(np.nan)
 
             # Load script page
-            script_button = self.driver.find_element_by_xpath('//a[contains(@href, "/scripts")]')
-            script_button.click()
-
-            # Wait
             try:
-                element_present = EC.presence_of_element_located((By.CLASS_NAME, 'scrtext'))
-                WebDriverWait(self.driver, timeout).until(element_present)
-            except TimeoutException:
-                print("Timed out waiting for page to load")
+                script_button = self.driver.find_element_by_xpath('//a[contains(@href, "/scripts")]')
+                script_button.click()
 
-            # Gets script
-            self.movie_scripts.append(self.driver.find_element_by_class_name('scrtext').text)
+                # Wait
+                try:
+                    element_present = EC.presence_of_element_located((By.CLASS_NAME, 'scrtext'))
+                    WebDriverWait(self.driver, timeout).until(element_present)
+                except TimeoutException:
+                    print("Timed out waiting for page to load")
+
+                # Gets script
+                self.movie_scripts.append(self.driver.find_element_by_class_name('scrtext').text)
+            except NoSuchElementException:
+                self.movie_scripts.append(np.nan)
             
             # Condition which saves progress as a csv every 100 scripts, and a final copy
             if count == num_films:
