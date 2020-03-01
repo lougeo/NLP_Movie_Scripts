@@ -47,42 +47,72 @@ class ScriptScraper():
 #################################################
     def getit(self):
         count = 0
+        self.movie_links = []
+        self.movie_titles = []
         self.movie_scripts = []
         self.movie_genres = []
-        self.movie_titles2 = []
+        self.movie_titles_dyn = []
+
+        
+        # Loads the page listing all movies
+        self.driver.get("https://www.imsdb.com/all%20scripts/")
+
+        # the wait code was copied from a kind soul on stack overflow @:
+        # https://stackoverflow.com/questions/26566799/wait-until-page-is-loaded-with-selenium-webdriver-for-python 
+        #####
+        timeout = 10
+        try:
+            element_present = EC.presence_of_element_located((By.XPATH, '/html/body/table[2]/tbody/tr/td[3]/p'))
+            WebDriverWait(self.driver, timeout).until(element_present)
+        except TimeoutException:
+            print("Timed out waiting for page to load")
+    
+
+        # Find and get links to movies
+        for i in self.driver.find_elements_by_xpath("/html/body/table[2]/tbody/tr/td[3]/p"):
+            self.movie_links.append(i.find_element_by_xpath('.//a').get_attribute('href'))
+            self.movie_titles.append(i.find_element_by_xpath('.//a').get_attribute('text'))
+        
+        num_films = len(self.movie_links)
+        print('All links found', end='\r')
 
         # Loops over all of the movie links collected with the num_elements function,
         # collecting the scripts, and genres, for each movie.
         for i in self.movie_links:
+
+            # Dynamically update movie titles in case of crash/debugging purposes
+            # Must come before count is updated
+            self.movie_titles_dyn.append(self.movie_titles[count])
+
             # local variables
             timeout = 20
             count += 1
 
             # testing condition
-            if count > 3:
-                break
+            #if count > 3:
+            #    break
 
             # Load intermediate page
             self.driver.get(i)
 
             # Wait
             try:
-                element_present = EC.presence_of_element_located((By.XPATH, '//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/scripts")]'))
+                element_present = EC.presence_of_element_located((By.XPATH, '//a[contains(@href, "/scripts")]'))
                 WebDriverWait(self.driver, timeout).until(element_present)
             except TimeoutException:
                 print("Timed out waiting for page to load")
             
-            # Gets the titles again for redundancy and to make the dfs exoprted in this loop more complete
-            self.movie_titles2.append(self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[1]/td/h1').get_attribute('text'))
-            
             # Gets Genres
+            # Changed so that it is more general
+            # Downside is that it now picks up the 18 genres + the film genres
+            # Easy enough to deal with in post
             genre_inter = []
-            for i in self.driver.find_elements_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/genre")]'):
+            for i in self.driver.find_elements_by_xpath('//a[contains(@href, "/genre")]'):
                 genre_inter.append(i.get_attribute('text'))
             self.movie_genres.append(genre_inter)
 
             # Load script page
-            script_button = self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/scripts")]')
+            script_button = self.driver.find_element_by_xpath('//a[contains(@href, "/scripts")]')
             script_button.click()
 
             # Wait
@@ -96,22 +126,22 @@ class ScriptScraper():
             self.movie_scripts.append(self.driver.find_element_by_class_name('scrtext').text)
             
             # Condition which saves progress as a csv every 100 scripts, and a final copy
-            if count == len(self.movie_links):
-                df = pd.DataFrame({'titles':self.movie_titles2,
+            if count == num_films:
+                df = pd.DataFrame({'titles':self.movie_titles_dyn,
                                    'scripts':self.movie_scripts,
                                    'genres':self.movie_genres})
                 df.to_csv(f'scripts_upto_all.csv')
             elif (count % 100) == 0:
-                df = pd.DataFrame({'titles':self.movie_titles2,
+                df = pd.DataFrame({'titles':self.movie_titles_dyn,
                                    'scripts':self.movie_scripts,
                                    'genres':self.movie_genres})
                 df.to_csv(f'scripts_upto_{count}.csv')
             # Test condition
-            elif count == 3:
-                df = pd.DataFrame({'titles':self.movie_titles2,
-                                   'scripts':self.movie_scripts,
-                                   'genres':self.movie_genres})
-                df.to_csv(f'scripts_upto_TEST.csv')
+            #elif count == 3:
+            #    df = pd.DataFrame({'titles':self.movie_titles_dyn,
+            #                       'scripts':self.movie_scripts,
+            #                       'genres':self.movie_genres})
+            #    df.to_csv(f'scripts_upto_TEST.csv')
 
 
     def no_loop_test(self):
