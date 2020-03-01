@@ -1,5 +1,6 @@
 # Louis George
-# Web Scraper
+# Web Scraper for:
+# IMSDb.com as of Feb 2020
 
 import numpy as np
 import pandas as pd 
@@ -35,18 +36,82 @@ class ScriptScraper():
             WebDriverWait(self.driver, timeout).until(element_present)
         except TimeoutException:
             print("Timed out waiting for page to load")
-        #####
-        print("I'm here")
+    
         # Find and get links to movies
         for i in self.driver.find_elements_by_xpath("/html/body/table[2]/tbody/tr/td[3]/p"):
             self.movie_links.append(i.find_element_by_xpath('.//a').get_attribute('href'))
             self.movie_titles.append(i.find_element_by_xpath('.//a').get_attribute('text'))
-            
-    def gitit(self):
 
+#################################################
+# WARNING: THIS FUNCTION RUNS FOR A LONG TIME 
+#################################################
+    def getit(self):
+        count = 0
+        self.movie_scripts = []
+        self.movie_genres = []
+        self.movie_titles2 = []
+
+        # Loops over all of the movie links collected with the num_elements function,
+        # collecting the scripts, and genres, for each movie.
         for i in self.movie_links:
-            pass
+            # local variables
+            timeout = 10
+            count += 1
 
+            # testing condition
+            if count > 3:
+                break
+
+            # Load intermediate page
+            self.driver.get(i)
+
+            # Wait
+            try:
+                element_present = EC.presence_of_element_located((By.XPATH, '//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/scripts")]'))
+                WebDriverWait(self.driver, timeout).until(element_present)
+            except TimeoutException:
+                print("Timed out waiting for page to load")
+
+            # Load script page
+            script_button = self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/scripts")]')
+            script_button.click()
+
+            # Wait
+            try:
+                element_present = EC.presence_of_element_located((By.CLASS_NAME, 'scrtext'))
+                WebDriverWait(self.driver, timeout).until(element_present)
+            except TimeoutException:
+                print("Timed out waiting for page to load")
+
+            # Gets script
+            self.movie_scripts.append(self.driver.find_element_by_class_name('scrtext').text)
+            
+            # Gets the titles again for redundancy and to make the dfs exoprted in this loop more complete
+            self.movie_titles2.append(self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td[2]/h1').get_attribute('text'))
+            
+            # Gets Genres
+            genre_inter = []
+            for i in self.driver.find_elements_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td[2]/a[contains(@href, "/genre")]'):
+                genre_inter.append(i.get_attribute('text'))
+            self.movie_genres.append(genre_inter)
+
+            # Condition which saves progress as a csv every 100 scripts, and a final copy
+            if count == len(self.movie_links):
+                df = pd.DataFrame({'titles':self.movie_titles2,
+                                   'scripts':self.movie_scripts,
+                                   'genres':self.movie_genres})
+                df.to_csv(f'scripts_upto_all.csv')
+            elif (count % 100) == 0:
+                df = pd.DataFrame({'titles':self.movie_titles2,
+                                   'scripts':self.movie_scripts,
+                                   'genres':self.movie_genres})
+                df.to_csv(f'scripts_upto_{count}.csv')
+            # Test condition
+            elif count == 3:
+                df = pd.DataFrame({'titles':self.movie_titles2,
+                                   'scripts':self.movie_scripts,
+                                   'genres':self.movie_genres})
+                df.to_csv(f'scripts_upto_TEST.csv')
 
 
     def no_loop_test(self):
