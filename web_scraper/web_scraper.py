@@ -55,7 +55,7 @@ class ScriptScraper():
         # collecting the scripts, and genres, for each movie.
         for i in self.movie_links:
             # local variables
-            timeout = 10
+            timeout = 20
             count += 1
 
             # testing condition
@@ -71,6 +71,15 @@ class ScriptScraper():
                 WebDriverWait(self.driver, timeout).until(element_present)
             except TimeoutException:
                 print("Timed out waiting for page to load")
+            
+            # Gets the titles again for redundancy and to make the dfs exoprted in this loop more complete
+            self.movie_titles2.append(self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[1]/td/h1').get_attribute('text'))
+            
+            # Gets Genres
+            genre_inter = []
+            for i in self.driver.find_elements_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/genre")]'):
+                genre_inter.append(i.get_attribute('text'))
+            self.movie_genres.append(genre_inter)
 
             # Load script page
             script_button = self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table[1]/tbody/tr[2]/td[2]/a[contains(@href, "/scripts")]')
@@ -86,15 +95,6 @@ class ScriptScraper():
             # Gets script
             self.movie_scripts.append(self.driver.find_element_by_class_name('scrtext').text)
             
-            # Gets the titles again for redundancy and to make the dfs exoprted in this loop more complete
-            self.movie_titles2.append(self.driver.find_element_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td[2]/h1').get_attribute('text'))
-            
-            # Gets Genres
-            genre_inter = []
-            for i in self.driver.find_elements_by_xpath('//*[@id="mainbody"]/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td[2]/a[contains(@href, "/genre")]'):
-                genre_inter.append(i.get_attribute('text'))
-            self.movie_genres.append(genre_inter)
-
             # Condition which saves progress as a csv every 100 scripts, and a final copy
             if count == len(self.movie_links):
                 df = pd.DataFrame({'titles':self.movie_titles2,
