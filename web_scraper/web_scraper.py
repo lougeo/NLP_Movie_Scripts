@@ -6,47 +6,24 @@ import numpy as np
 import pandas as pd 
 from time import sleep
 
-import requests
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
 
 class ScriptScraper():
 
     def __init__(self):
         self.driver = webdriver.Chrome(r"C:\Users\louis\Downloads\Chromedriver\chromedriver_win32\chromedriver.exe")
 
-    def num_elements(self):
-
-        self.movie_links = []
-        self.movie_titles = []
-
-        # Loads the page listing all movies
-        self.driver.get("https://www.imsdb.com/all%20scripts/")
-
-        # the wait code was copied from a kind soul on stack overflow @:
-        # https://stackoverflow.com/questions/26566799/wait-until-page-is-loaded-with-selenium-webdriver-for-python 
-        #####
-        timeout = 10
-        try:
-            element_present = EC.presence_of_element_located((By.XPATH, '/html/body/table[2]/tbody/tr/td[3]/p'))
-            WebDriverWait(self.driver, timeout).until(element_present)
-        except TimeoutException:
-            print("Timed out waiting for page to load")
-    
-        # Find and get links to movies
-        for i in self.driver.find_elements_by_xpath("/html/body/table[2]/tbody/tr/td[3]/p"):
-            self.movie_links.append(i.find_element_by_xpath('.//a').get_attribute('href'))
-            self.movie_titles.append(i.find_element_by_xpath('.//a').get_attribute('text'))
-
 #################################################
 # WARNING: THIS FUNCTION RUNS FOR A LONG TIME 
 #################################################
+
     def getit(self):
         count = 0
+        timeout = 20
         self.movie_links = []
         self.movie_titles = []
         self.movie_scripts = []
@@ -60,7 +37,6 @@ class ScriptScraper():
         # the wait code was copied from a kind soul on stack overflow @:
         # https://stackoverflow.com/questions/26566799/wait-until-page-is-loaded-with-selenium-webdriver-for-python 
         #####
-        timeout = 10
         try:
             element_present = EC.presence_of_element_located((By.XPATH, '/html/body/table[2]/tbody/tr/td[3]/p'))
             WebDriverWait(self.driver, timeout).until(element_present)
@@ -84,8 +60,7 @@ class ScriptScraper():
             # Must come before count is updated
             self.movie_titles_dyn.append(self.movie_titles[count])
 
-            # local variables
-            timeout = 20
+            # local variable
             count += 1
 
             # testing condition
@@ -100,7 +75,7 @@ class ScriptScraper():
                 element_present = EC.presence_of_element_located((By.XPATH, '//a[contains(@href, "/scripts")]'))
                 WebDriverWait(self.driver, timeout).until(element_present)
             except TimeoutException:
-                print("Timed out waiting for page to load")
+                print("Loading Initail Intermediate Page: Timed out waiting for page to load")
             
             # Gets Genres
             # Changed so that it is more general
@@ -128,7 +103,7 @@ class ScriptScraper():
 
                 # Gets script
                 self.movie_scripts.append(self.driver.find_element_by_class_name('scrtext').text)
-            except NoSuchElementException:
+            except:
                 self.movie_scripts.append(np.nan)
             
             # Condition which saves progress as a csv every 100 scripts, and a final copy
@@ -180,4 +155,3 @@ class ScriptScraper():
         test_genre.append(genre_inter)
 
         return test_movie_titles, len(test_movie_script), test_genre
-
