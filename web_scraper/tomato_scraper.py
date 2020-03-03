@@ -48,7 +48,7 @@ class ScoreScraper():
             
             except:
                 # Appends nan if timeout
-                self.movie_info.append(np.nan)
+                self.movie_info1.append(np.nan)
 
         df_movie_info1 = pd.DataFrame({'titles':self.movie_title_dyn1, 
                                        'info':self.movie_info1})
@@ -77,7 +77,7 @@ class ScoreScraper():
             
             except:
                 # Appends nan if timeout
-                self.movie_info.append(np.nan)
+                self.movie_info2.append(np.nan)
 
         df_movie_info1 = pd.DataFrame({'titles':self.movie_title_dyn2, 
                                        'info':self.movie_info2})
