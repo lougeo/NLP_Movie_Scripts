@@ -25,7 +25,7 @@ class ScoreScraper():
         self.titles2 = titles.iloc[500:, :]
 
     def getit1(self):
-
+        timeout = 10
         movie_info = []
 
         for i in self.titles1['titles']:
@@ -51,7 +51,7 @@ class ScoreScraper():
             df_movie_info1.to_csv('movie_info1.csv')
     
     def getit2(self):
-
+        timeout = 10
         movie_info = []
 
         for i in self.titles1['titles']:
