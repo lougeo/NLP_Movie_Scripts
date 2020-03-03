@@ -4,6 +4,7 @@
 
 import numpy as np
 import pandas as pd 
+from time import sleep
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
@@ -26,12 +27,13 @@ class ScoreScraper():
 
     def getit1(self):
         timeout = 10
-        movie_info = []
+        self.movie_info1 = []
+        self.movie_title_dyn1 = []
 
         for i in self.titles1['titles']:
             try:
                 self.driver.get(f'http://www.omdbapi.com/?apikey=fd40c3c8&t={i}')
-
+            
                 # Wait
                 try:
                     element_present = EC.presence_of_element_located((By.XPATH, '/html/body/pre'))
@@ -39,25 +41,28 @@ class ScoreScraper():
                 except TimeoutException:
                     print("Timed out waiting for page to load")
                 
+                # Appends movie title dynamically for reference
+                self.movie_title_dyn1.append(i)
                 # Appending full json to list
-                movie_info.append(self.driver.find_element_by_xpath('/html/body/pre').text)
+                self.movie_info1.append(self.driver.find_element_by_xpath('/html/body/pre').text)
             
             except:
                 # Appends nan if timeout
-                movie_info.append(np.nan)
+                self.movie_info.append(np.nan)
 
-            df_movie_info1 = pd.DataFrame({'titles':self.titles1,
-                                        'info':movie_info})
-            df_movie_info1.to_csv('movie_info1.csv')
+        df_movie_info1 = pd.DataFrame({'titles':self.movie_title_dyn1, 
+                                       'info':self.movie_info1})
+        df_movie_info1.to_csv('movie_info1.csv')
     
     def getit2(self):
         timeout = 10
-        movie_info = []
+        self.movie_info2 = []
+        self.movie_title_dyn2 = []
 
-        for i in self.titles1['titles']:
+        for i in self.titles2['titles']:
             try:
                 self.driver.get(f'http://www.omdbapi.com/?apikey=fd40c3c8&t={i}')
-
+            
                 # Wait
                 try:
                     element_present = EC.presence_of_element_located((By.XPATH, '/html/body/pre'))
@@ -65,15 +70,15 @@ class ScoreScraper():
                 except TimeoutException:
                     print("Timed out waiting for page to load")
                 
+                # Appends movie title dynamically for reference
+                self.movie_title_dyn2.append(i)
                 # Appending full json to list
-                movie_info.append(self.driver.find_element_by_xpath('/html/body/pre').text)
+                self.movie_info2.append(self.driver.find_element_by_xpath('/html/body/pre').text)
             
             except:
                 # Appends nan if timeout
-                movie_info.append(np.nan)
+                self.movie_info.append(np.nan)
 
-                
-            df_movie_info2 = pd.DataFrame({'titles':self.titles2,
-                                        'info':movie_info})
-            df_movie_info2.to_csv('movie_info2.csv')
-    
+        df_movie_info1 = pd.DataFrame({'titles':self.movie_title_dyn2, 
+                                       'info':self.movie_info2})
+        df_movie_info1.to_csv('movie_info2.csv')
