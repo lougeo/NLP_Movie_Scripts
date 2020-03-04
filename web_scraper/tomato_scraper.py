@@ -21,7 +21,7 @@ class ScoreScraper():
     def tables(self):
 
         # Split into two batches as only 1000 requests aloud per day
-        titles = pd.read_csv('../movie_titles.csv').drop('Unnamed: 0', axis=1)
+        titles = pd.read_csv('movie_titles.csv').drop('Unnamed: 0', axis=1)
         self.titles1 = titles.iloc[:500, :]
         self.titles2 = titles.iloc[500:, :]
 
