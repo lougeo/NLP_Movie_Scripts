@@ -6,6 +6,12 @@ import numpy as np
 import pandas as pd 
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+
 
 class IMDbScraper():
 
@@ -16,6 +22,7 @@ class IMDbScraper():
 
         self.movie_info = []
         self.movie_id_dyn = []
+        timeout = 20
 
         self.df = pd.read_csv('imbd_ids.csv').drop('Unnamed: 0', axis=1)
 
@@ -24,8 +31,17 @@ class IMDbScraper():
             self.movie_id_dyn.append(i)
 
             try:
+                # Load page
                 self.driver.get(f'https://www.imdb.com/title/{i}/')
 
+                # Wait
+                try:
+                    element_present = EC.presence_of_element_located((By.XPATH, '//*[@id="titleDetails"]'))
+                    WebDriverWait(self.driver, timeout).until(element_present)
+                except TimeoutException:
+                    print("Timed out waiting for page to load")
+
+                # Get info
                 info = self.driver.find_element_by_xpath('//*[@id="titleDetails"]')
                 self.movie_info.append(info.text)
             except:
