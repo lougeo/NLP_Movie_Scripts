@@ -1,8 +1,49 @@
-from flask import Flask, render_template, redirect, url_for, flash
-from forms import InputScript
-app = Flask(__name__)
+import numpy as np
+import pandas as pd
 
+import spacy
+import joblib
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
+
+from flask import Flask, render_template, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+
+from forms import Script_Submit
+from predictor import feature_df, script_transformer, merger
+
+
+app = Flask(__name__)
 app.config['SECRET_KEY'] = '420SWED69'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
+
+tfidf = joblib.load('../models/tfidf_full.pkl')
+
+# Predicting on the input dataframe
+logreg_imdb = joblib.load('../models/imdb_logreg_full.pkl')
+logreg_rt = joblib.load('../models/rt_logreg_full.pkl')
+logreg_profit = joblib.load('../models/profit_logreg_full.pkl')
+xgbc_imdb = joblib.load('../models/imdb_xgbc_full.pkl')
+xgbc_rt = joblib.load('../models/rt_xgbc_full.pkl')
+xgbc_profit = joblib.load('../models/profit_xgbc_full.pkl')
+
+
+class Script_Data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    genre1 = db.Column(db.Boolean)
+    genre2 = db.Column(db.Boolean)
+    title = db.Column(db.String)
+    script = db.Column(db.String)
+
+    def __repr__(self):
+        return f"Script for: {self.title}"
+
+title = ''
+script = ''
+genre_info = []
 
 @app.route("/")
 @app.route("/home")
@@ -11,33 +52,28 @@ def home():
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
-    form = InputScript()
+    form = Script_Submit()
     if form.validate_on_submit():
         flash('Script accepted', 'success')
-        return redirect(url_for('home'))
+        global title, script, genre_info
+        title = form.genre1.label
+        script = form.script.data
+        genre_info.append([form.genre1.label, form.genre1.data])
+        post = Script_Data(genre1=form.genre1.data,
+                           genre2=form.genre2.data,
+                           title=form.title.data,
+                           script=form.script.data)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('results'))
     return render_template('submit.html', title='Script Submit', form=form)
 
-@app.route('/predict/', methods=['POST'])
-def predict_sentiment():
-    input_json = request.get_json(force=True)
-    print(f'Data sent in request:{input_json}')
-
-    # Read the review data and apply preprocessing (vectorization)
-    review_text = [input_json['review']]
-    print('Vectorizing data')
-    countvectorizer = joblib.load("models/count_vectorizer.pkl")    
-    X_new = countvectorizer.transform(review_text)
+@app.route('/results', methods=["GET", "POST"])
+def results():
     
-    # Score the model
-    print('Scoring...')
-    sentiment_logit = joblib.load("models/sentiment_logit.pkl")
-    sentiment_score = sentiment_logit.predict_proba(X_new)[0]
-    print(sentiment_score)
-    negative_score = sentiment_score[0]
-    positive_score = sentiment_score[1]
-
-    return jsonify({"positive":positive_score, "negative":negative_score})
-
+    return render_template('results.html', title='Results Page', test=title)
 
 if __name__ == '__main__':
     app.run(debug=True)
+    db.drop_all() 
+    db.create_all()
