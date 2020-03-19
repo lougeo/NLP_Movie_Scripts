@@ -1,6 +1,16 @@
+import numpy as np
+import pandas as pd
+
+import spacy
+import joblib
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
+
+
 # All functions necessary to be run in routes
 
-# Take the inputs and put them all into a dataframe with 'script' as the column with the script
 def script_input(script):
     lscript = [script]
     df = pd.DataFrame({'script':lscript}, index=range(len(lscript)))
@@ -50,19 +60,6 @@ def pos_counter(df):
     return df
 
 
-def merger(script, genre_info):
-    #Creating the features
-    df_s = script_input(script)
-    df_sg = genre_convert(genre_info, df_s)
-    df_sgp = pos_counter(df_sg)
-    #Transforming the script
-    in_transformed = tfidf.transform(df_sgp['script'])
-    # Turning it into a dataframe
-    df_vecs = pd.DataFrame(columns=tfidf.get_feature_names(), data=in_transformed.toarray())
-    # Merging all of the features
-    X_merged = pd.concat([df_sgp.drop('script', axis=1).reset_index(drop=True), df_vecs], axis=1)
-
-    return X_merged
 
 # Functions required for vectorizing
 def my_preprocessor(string):
