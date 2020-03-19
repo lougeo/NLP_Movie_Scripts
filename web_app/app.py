@@ -114,14 +114,19 @@ def submit():
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
-    scores = [logreg_imdb.predict_proba(df),
-              logreg_rt.predict_proba(df),
-              logreg_profit.predict_proba(df),
-              xgbc_imdb.predict_proba(df),
-              xgbc_rt.predict_proba(df),
-              xgbc_profit.predict_proba(df)]
+    try:
+        scores = [logreg_imdb.predict_proba(df),
+                logreg_rt.predict_proba(df),
+                logreg_profit.predict_proba(df),
+                xgbc_imdb.predict_proba(df),
+                xgbc_rt.predict_proba(df),
+                xgbc_profit.predict_proba(df)]
+
+        return render_template('results.html', title='Results Page', stitle=title, scores=scores)
+
+    except:
+        return render_template('results.html', title='Results Page')
     
-    return render_template('results.html', title='Results Page', stitle=title, scores=scores)
 
 if __name__ == '__main__':
     app.run(debug=True)

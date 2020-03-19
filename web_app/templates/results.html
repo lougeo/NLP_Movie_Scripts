@@ -2,7 +2,7 @@
 
 {% block content %}
     <div>
-        {% if not df is defined %}
+        {% if scores is defined %}
         <h2>Here are your dumbass results:</h2>
         <p>{{ stitle }}</p>
         <p>Logistic Model IMDb: {{ scores[0] }}</p>
