@@ -2,7 +2,17 @@
 
 {% block content %}
     <div>
-        Results, bitches
-        {{ test }}
+        {% if not df is defined %}
+        <h2>Here are your dumbass results:</h2>
+        <p>{{ stitle }}</p>
+        <p>Logistic Model IMDb: {{ scores[0] }}</p>
+        <p>Logistic Model Rotten Tomatoe: {{ scores[1] }}</p>
+        <p>Logistic Model Profit Margin: {{ scores[2] }}</p>
+        <p>XG Boost Model IMDb: {{ scores[3] }}</p>
+        <p>XG Boost Model Rotten Tomatoe: {{ scores[4] }}</p>
+        <p>XG Boost Model Profit Margin: {{ scores[5] }}</p>
+        {% else %}
+        <h2>Please enter a script on the submit page</h2>
+        {% endif %}
     </div>
 {% endblock content %}
