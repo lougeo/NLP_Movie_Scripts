@@ -12,17 +12,18 @@ from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
 from forms import Script_Submit
-from predictor import feature_df, script_transformer, merger
+from functions import feature_df, script_transformer, merger, my_preprocessor, my_tokenizer
 
-
+# Initializing the app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '420SWED69'
+
+# Initializing the db
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 
-tfidf = joblib.load('../models/tfidf_full.pkl')
-
-# Predicting on the input dataframe
+# Loading in the pickles
+tfidf = joblib.load('../models/full_tfidf.pkl')
 logreg_imdb = joblib.load('../models/imdb_logreg_full.pkl')
 logreg_rt = joblib.load('../models/rt_logreg_full.pkl')
 logreg_profit = joblib.load('../models/profit_logreg_full.pkl')
@@ -41,9 +42,6 @@ class Script_Data(db.Model):
     def __repr__(self):
         return f"Script for: {self.title}"
 
-title = ''
-script = ''
-genre_info = []
 
 @app.route("/")
 @app.route("/home")
@@ -55,10 +53,16 @@ def submit():
     form = Script_Submit()
     if form.validate_on_submit():
         flash('Script accepted', 'success')
+        # Dealing with the data locally
         global title, script, genre_info
-        title = form.genre1.label
+        title = form.title.data
         script = form.script.data
-        genre_info.append([form.genre1.label, form.genre1.data])
+        genre_info = [[form.genre1.label, form.genre1.data],
+                      [form.genre2.label, form.genre2.data]]
+        df_features = feature_df(script, genre_info)
+        df_vecs = script_transformer(df_features)
+        # Sending the data to a database
+        # Not implemented yet
         post = Script_Data(genre1=form.genre1.data,
                            genre2=form.genre2.data,
                            title=form.title.data,
