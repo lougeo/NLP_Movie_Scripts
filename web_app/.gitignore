@@ -1,0 +1,4 @@
+.gcloudignore
+site.db
+__pycache__
+app.yaml

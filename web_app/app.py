@@ -34,13 +34,13 @@ app.config['SECRET_KEY'] = '420SWED69'
 
 
 # Loading in the pickles
-tfidf = joblib.load('../models/full_tfidf.pkl')
-logreg_imdb = joblib.load('../models/imdb_logreg_full.pkl')
-logreg_rt = joblib.load('../models/rt_logreg_full.pkl')
-logreg_profit = joblib.load('../models/profit_logreg_full.pkl')
-xgbc_imdb = joblib.load('../models/imdb_xgbc_full.pkl')
-xgbc_rt = joblib.load('../models/rt_xgbc_full.pkl')
-xgbc_profit = joblib.load('../models/profit_xgbc_full.pkl')
+tfidf = joblib.load('models/full_tfidf.pkl')
+logreg_imdb = joblib.load('models/imdb_logreg_full.pkl')
+logreg_rt = joblib.load('models/rt_logreg_full.pkl')
+logreg_profit = joblib.load('models/profit_logreg_full.pkl')
+xgbc_imdb = joblib.load('models/imdb_xgbc_full.pkl')
+xgbc_rt = joblib.load('models/rt_xgbc_full.pkl')
+xgbc_profit = joblib.load('models/profit_xgbc_full.pkl')
 
 
 def merger(script, genre_info):
@@ -129,6 +129,6 @@ def results():
     
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
     # db.drop_all() 
     # db.create_all()

@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div>
+    <div class=content-section>
         {% if scores is defined %}
-        <h2>Here are your dumbass results:</h2>
+        <h2>Here are your results:</h2>
         <p>{{ stitle }}</p>
         <p>Logistic Model IMDb: {{ scores[0] }}</p>
         <p>Logistic Model Rotten Tomatoe: {{ scores[1] }}</p>
