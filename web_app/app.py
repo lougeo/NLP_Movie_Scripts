@@ -9,7 +9,6 @@ from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 
 from flask import Flask, render_template, redirect, url_for, flash
-#from flask_sqlalchemy import SQLAlchemy
 
 from forms import Script_Submit
 from functions import script_input, genre_convert, pos_counter, my_preprocessor, my_tokenizer
@@ -18,31 +17,17 @@ from functions import script_input, genre_convert, pos_counter, my_preprocessor,
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '420SWED69'
 
-# # Initializing the db
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-# db = SQLAlchemy(app)
-
-# class Script_Data(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     genre1 = db.Column(db.Boolean)
-#     genre2 = db.Column(db.Boolean)
-#     title = db.Column(db.String)
-#     script = db.Column(db.String)
-
-#     def __repr__(self):
-#         return f"Script for: {self.title}"
-
 
 # Loading in the pickles
-tfidf = joblib.load('models/full_tfidf.pkl')
-logreg_imdb = joblib.load('models/imdb_logreg_full.pkl')
-logreg_rt = joblib.load('models/rt_logreg_full.pkl')
-logreg_profit = joblib.load('models/profit_logreg_full.pkl')
-xgbc_imdb = joblib.load('models/imdb_xgbc_full.pkl')
-xgbc_rt = joblib.load('models/rt_xgbc_full.pkl')
-xgbc_profit = joblib.load('models/profit_xgbc_full.pkl')
+tfidf = joblib.load('static/models/full_tfidf.pkl')
+logreg_imdb = joblib.load('static/models/imdb_logreg_full.pkl')
+logreg_rt = joblib.load('static/models/rt_logreg_full.pkl')
+logreg_profit = joblib.load('static/models/profit_logreg_full.pkl')
+xgbc_imdb = joblib.load('static/models/imdb_xgbc_full.pkl')
+xgbc_rt = joblib.load('static/models/rt_xgbc_full.pkl')
+xgbc_profit = joblib.load('static/models/profit_xgbc_full.pkl')
 
-
+# Has to be defined in this file rather than functions file
 def merger(script, genre_info):
     #Creating the features
     df_s = script_input(script)
@@ -57,12 +42,13 @@ def merger(script, genre_info):
 
     return X_merged
 
-
+# Home page
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html')
 
+# Submit page
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
     # Initialize form
@@ -100,18 +86,10 @@ def submit():
                       [form.genre22.description, form.genre22.data]]
         df = merger(script, genre_info)
 
-        # Sending the data to a database
-        # Not implemented yet
-        # post = Script_Data(genre1=form.genre1.data,
-        #                    genre2=form.genre2.data,
-        #                    title=form.title.data,
-        #                    script=form.script.data)
-        # db.session.add(post)
-        # db.session.commit()
-
         return redirect(url_for('results'))
     return render_template('submit.html', title='Script Submit', form=form)
 
+# Results page
 @app.route('/results', methods=["GET", "POST"])
 def results():
     try:
@@ -129,6 +107,42 @@ def results():
     
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', debug=True)
+
+
+
+
+########################
+# DATABASE CODE - UNUSED AT THE MOMENT
+
+#from flask_sqlalchemy import SQLAlchemy
+
+
+# # Initializing the db
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# db = SQLAlchemy(app)
+
+# class Script_Data(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     genre1 = db.Column(db.Boolean)
+#     genre2 = db.Column(db.Boolean)
+#     title = db.Column(db.String)
+#     script = db.Column(db.String)
+
+#     def __repr__(self):
+#         return f"Script for: {self.title}"
+
+
+        # Sending the data to a database
+        # Not implemented yet
+        # post = Script_Data(genre1=form.genre1.data,
+        #                    genre2=form.genre2.data,
+        #                    title=form.title.data,
+        #                    script=form.script.data)
+        # db.session.add(post)
+        # db.session.commit()
+
     # db.drop_all() 
     # db.create_all()
+
+
