@@ -1,3 +1,7 @@
 models
 plots
 .ipynb_checkpoints
+__pycache__
+venv
+models
+site.db
