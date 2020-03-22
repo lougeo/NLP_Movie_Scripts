@@ -1,101 +1,141 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div>
+    <div class=content-section>
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
+                <h3>Instructions</h3> <br>
+                <p>
+                    Select a movie script from a site such as: <br>
+                    <a href="https://www.imsdb.com/">imsdb.com</a> <br><br>
+                    Copypasta the text of the script you chose into the form below <br><br>
+                    Be amazed by the mediocrity of AI <br><br>
+                </p>
                 <legend class="border-bottom mb-4">Enter info here:</legend>
                 <p>Select all genres which apply:</p>
                 <!-- Genres -->
-                <div class="form-check">
-                    {{ form.genre1(class="form-check-input")}}
-                    {{ form.genre1.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre2(class="form-check-input")}}
-                    {{ form.genre2.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre3(class="form-check-input")}}
-                    {{ form.genre3.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre4(class="form-check-input")}}
-                    {{ form.genre4.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre5(class="form-check-input")}}
-                    {{ form.genre5.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre6(class="form-check-input")}}
-                    {{ form.genre6.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre7(class="form-check-input")}}
-                    {{ form.genre7.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre8(class="form-check-input")}}
-                    {{ form.genre8.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre9(class="form-check-input")}}
-                    {{ form.genre9.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre10(class="form-check-input")}}
-                    {{ form.genre10.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre11(class="form-check-input")}}
-                    {{ form.genre11.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre12(class="form-check-input")}}
-                    {{ form.genre12.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre13(class="form-check-input")}}
-                    {{ form.genre13.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre14(class="form-check-input")}}
-                    {{ form.genre14.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre15(class="form-check-input")}}
-                    {{ form.genre15.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre16(class="form-check-input")}}
-                    {{ form.genre16.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre17(class="form-check-input")}}
-                    {{ form.genre17.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre18(class="form-check-input")}}
-                    {{ form.genre18.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre19(class="form-check-input")}}
-                    {{ form.genre19.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre20(class="form-check-input")}}
-                    {{ form.genre20.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre21(class="form-check-input")}}
-                    {{ form.genre21.label(class="form-check-label")}}
-                </div>
-                <div class="form-check">
-                    {{ form.genre22(class="form-check-input")}}
-                    {{ form.genre22.label(class="form-check-label")}}
-                </div>
+                <table style="width:100%">
+                    <tr>
+                        <td class="form-check">
+                            {{ form.genre1(class="form-check-input")}}
+                            {{ form.genre1.label(class="form-check-label")}}
+                        </td>
+                        <td>
+                            {{ form.genre5(class="form-check-input")}}
+                            {{ form.genre5.label(class="form-check-label")}}
+                        </td>
+                        <td>
+                            {{ form.genre9(class="form-check-input")}}
+                            {{ form.genre9.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre13(class="form-check-input")}}
+                            {{ form.genre13.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre17(class="form-check-input")}}
+                            {{ form.genre17.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre21(class="form-check-input")}}
+                            {{ form.genre21.label(class="form-check-label")}}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-check">
+                            {{ form.genre2(class="form-check-input")}}
+                            {{ form.genre2.label(class="form-check-label")}}
+                        </td>
+                        <td>
+                            {{ form.genre6(class="form-check-input")}}
+                            {{ form.genre6.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre10(class="form-check-input")}}
+                            {{ form.genre10.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre14(class="form-check-input")}}
+                            {{ form.genre14.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre18(class="form-check-input")}}
+                            {{ form.genre18.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre22(class="form-check-input")}}
+                            {{ form.genre22.label(class="form-check-label")}}
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-check">
+                            {{ form.genre3(class="form-check-input")}}
+                            {{ form.genre3.label(class="form-check-label")}}
+                        </td>
+                        <td>
+                            {{ form.genre7(class="form-check-input")}}
+                            {{ form.genre7.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre11(class="form-check-input")}}
+                            {{ form.genre11.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre15(class="form-check-input")}}
+                            {{ form.genre15.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre19(class="form-check-input")}}
+                            {{ form.genre19.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-check">
+                            {{ form.genre4(class="form-check-input")}}
+                            {{ form.genre4.label(class="form-check-label")}}
+                        </td>
+                        <td>
+                            {{ form.genre8(class="form-check-input")}}
+                            {{ form.genre8.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre12(class="form-check-input")}}
+                            {{ form.genre12.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre16(class="form-check-input")}}
+                            {{ form.genre16.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            {{ form.genre20(class="form-check-input")}}
+                            {{ form.genre20.label(class="form-check-label")}}
+
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table> <br>
                 <!-- Title and Script -->
                 <div class="form-group">
                     {{ form.title.label(class="form-control-label")}}

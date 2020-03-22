@@ -2,17 +2,125 @@
 
 {% block content %}
     <div class=content-section>
-        {% if scores is defined %}
-        <h2>Here are your results:</h2>
-        <p>{{ stitle }}</p>
-        <p>Logistic Model IMDb: {{ scores[0] }}</p>
-        <p>Logistic Model Rotten Tomatoe: {{ scores[1] }}</p>
-        <p>Logistic Model Profit Margin: {{ scores[2] }}</p>
-        <p>XG Boost Model IMDb: {{ scores[3] }}</p>
-        <p>XG Boost Model Rotten Tomatoe: {{ scores[4] }}</p>
-        <p>XG Boost Model Profit Margin: {{ scores[5] }}</p>
-        {% else %}
-        <h2>Please enter a script on the submit page</h2>
-        {% endif %}
+        <h3>General Details:</h3>
+        <p>What does good and bad mean for each category?</p>
+        <p>Check out the info page to see why I chose these.</p>
+        <table style="width:100%">
+            <tr>
+                <td>IMDb:</td>
+                <td>Rotten Tomatoes:</td>
+                <td>Profitability:</td>
+            </tr>
+            <tr>
+                <td>7/10 or higher is good</td>
+                <td>8/10 or higher is good</td>
+                <td>Revenue of 200% or more<br> of the budget is good</td>
+            </tr>
+        </table><br>
+        <p>NOTE: Real scores and the comparison are only available for movies that were in the data set which I assembled.</p><br><br>
+        <legend class="border-bottom mb-4">{{ stitle }}</legend><br>
+        <p>Results for IMDb:</p>
+        <table style="width:100%">
+            <tr>
+                <td>
+                    Logistic Regression
+                </td>
+                <td>
+                    XG Boost
+                </td>
+                <td>
+                    Score on IMDb
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ scores_c[0][1] }}% sure that it will be {{ scores_c[0][0]}}
+                </td>
+                <td>
+                    {{ scores_c[3][1] }}% sure that it will be {{ scores_c[3][0]}}
+                </td>
+                <td>
+                    {{ real_scores[0] }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ acc[0] }}
+                </td>
+                <td>
+                    {{ acc[1]}}
+                </td>
+            </tr>
+        </table><br><br>
+        <p>Results for Rotten Tomatoes:</p>
+        <table style="width:100%">
+            <tr>
+                <td>
+                    Logistic Regression
+                </td>
+                <td>
+                    XG Boost
+                </td>
+                <td>
+                    Score on <br> Rotten Tomatoes
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    {{ scores_c[1][1] }}% sure that it will be {{ scores_c[1][0]}}
+                </td>
+                <td>
+                    {{ scores_c[4][1] }}% sure that it will be {{ scores_c[4][0]}}
+                </td>
+                <td>
+                    {{ real_scores[1] }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ acc[2] }}
+                </td>
+                <td>
+                    {{ acc[3]}}
+                </td>
+            </tr>
+            
+        </table><br><br>
+        <p>Will it be profitable?</p>
+        <table style="width:100%">
+            <tr>
+                <td>
+                    Logistic Regression
+                </td>
+                <td>
+                    XG Boost
+                </td>
+                <td>
+                    Real Profit Margin
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    {{ scores_c[2][1] }}% sure that it will be {{ scores_c[2][0]}}
+                </td>
+                <td>
+                    {{ scores_c[5][1] }}% sure that it will be {{ scores_c[5][0]}}
+                </td>
+                <td>
+                    {{ real_scores[2] }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ acc[4] }}
+                </td>
+                <td>
+                    {{ acc[5]}}
+                </td>
+            </tr>
+            
+        </table>
     </div>
 {% endblock content %}

@@ -1,3 +1,5 @@
-.gcloudignore
 __pycache__
+vectorizer.py
+.gloudignore
 app.yaml
+models

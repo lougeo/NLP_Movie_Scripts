@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class=content-section>
+        <p>
+            Enter a script and the results will appear here! <br>
+            <form action="/submit" method="post">
+                <input type="submit" value="Let's Go!">
+            </form><br><br>
+        </p>
+    </div>
+{% endblock content %}

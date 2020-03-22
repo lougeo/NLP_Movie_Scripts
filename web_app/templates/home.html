@@ -5,43 +5,36 @@
         <h1>Welcome to GoodScriptBadScript</h1>
         <br>
         <h2>
-            This is made for your amusement! <br>
+            This is made for your amusement! <br><br>
             Have some fun testing out your favorite movie!
         </h2>
         <br>
         <p>
-            This is a tool which models any movie script you want, and tells you how good it thinks the script will do as a movie. <br> <br>
+            This is a tool which models any movie script (or other text) you want, and tells you how good it thinks the script will do as a movie. <br> <br>
 
-            It makes a precition based on how good it thinks the script will do: <br>
+            It makes a predicition based on how good it thinks the script will do: <br>
              - On IMDb <br>
              - On Rotten Tomatoes <br>
              - At the Box Office (Measured by worldwide gross revenue / budget) <br> <br>
+
+            Check out some disclaimers, and further info about the models here:
+            <form action="/info" method="post">
+                <input type="submit" value="Info">
+            </form><br>
+            Or get right to it here:
+            <form action="/submit" method="post">
+                <input type="submit" value="Let's Go!">
+            </form><br><br><br>
             
-            It runs the script against two different models for each of these targets: <br>
-             - A Logistic Regression Model <br>
-             - A Gradient Boosting Model <br>
-            I chose to use these two models because they are relatively interpretable. The reason I chose to look at two models rather than simply the one with the best accuracy is because I am more interested in interpretability, I think that it's interesting to compare the differences between the two models. <br> <br>
-
-            Interpretability is important in the context of this project, because I was never expecting to get great results due to (amoung other things): <br>
-             - A plethora of confounding factors (Directors, Producers, Actors/Actresses, etc..). <br>
-             - Several unresolvable, and major sources of bias, such as Survivorship Bias (only scripts which were made into movies where used to train the models). <br>
-             - Unique to realm of scripts: a multitude of versions, which get rewritten, and ultimately the script in my data set could be wildly different from the final version. <br>
-            Due to these limitations, and with the models only predicting marginally better than random, the fruit of this project takes the form of funny, and hopefully intriguing insights into commonalities between successful and unsuccessful movie scripts. <br> <br>
-
-            My goal with regards to this project was around the process, improving my coding, and to better understand the tools at my disposal for use in future projects. <br> <br>
-
-            I'd like to give my thanks to the educators at <a href="https://brainstation.io/">BrainStation</a> for their continued help over the past couple of months, this is really a project I wouldn't have even been able to think about building before my time there. <br>
-            I would also like to thank <a href="https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g">Corey Schafer</a> for some excellent coding tutorials, in particular his Flask series, from which this styling is copypasta, and the rest heavily influenced.
         </p>
-        <h2>
-            Louis George <br> <br>
-
+        <h2>Louis George</h2><br>
+        <h3>
             <a href="https://github.com/lougeo">GitHub</a> <br>
             <a href="https://www.linkedin.com/in/lougeo/">LinkedIn</a> <br> <br>
 
             Currently seeking employment!
-
-        </h2>
+        </h3>
+        
 
     </div>
 {% endblock content %}
