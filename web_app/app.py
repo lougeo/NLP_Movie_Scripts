@@ -44,8 +44,7 @@ xgbc_imdb = joblib.load("static/models/imdb_xgbc_full.pkl")
 xgbc_rt = joblib.load("static/models/rt_xgbc_full.pkl")
 xgbc_profit = joblib.load("static/models/profit_xgbc_full.pkl")
 
-# def load_pickles():
-#     global tfidf, logreg_imdb, logreg_rt, logreg_profit, xgbc_imdb, xgbc_rt, xgbc_profit
+# s3 links
 # Loading in the pickles
 # tfidf = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/full_tfidf_2.pkl"))
 
@@ -55,26 +54,7 @@ xgbc_profit = joblib.load("static/models/profit_xgbc_full.pkl")
 # xgbc_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_xgbc_full.pkl"))
 # xgbc_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_xgbc_full.pkl"))
 # xgbc_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_xgbc_full.pkl"))
-
-        # Loading in the pickles
-    # tfidf = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/full_tfidf_2.pkl"))
-
-    # logreg_imdb = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/imdb_logreg_full.pkl"))
-    # logreg_rt = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/rt_logreg_full.pkl"))
-    # logreg_profit = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/profit_logreg_full.pkl"))
-    # xgbc_imdb = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/imdb_xgbc_full.pkl"))
-    # xgbc_rt = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/rt_xgbc_full.pkl"))
-    # xgbc_profit = joblib.load(urlopen("https://storage.cloud.google.com/gsbs/profit_xgbc_full.pkl"))
-
-    
-
-
-#Thread(target=load_pickles).start()
-#load_pickles()
-
-# thread = Thread(target=load_pickles, args=())
-# thread.daemon = True
-# thread.start()
+ 
 
 # Home page
 @app.route("/")
@@ -193,15 +173,6 @@ def results():
     except:
         return render_template('error.html', title='Error')
 
-        # {% if scores_c is defined %}
-
-        # {% else %}
-        # <h2>
-        #     Please enter a script on the submit page.
-        # </h2>
-        # {% endif %}
-
-
 # error page
 @app.route('/error', methods=["GET", "POST"])
 def error_page():
@@ -212,8 +183,29 @@ if __name__ == '__main__':
 
 
 
-########################
+
+
+#############################################
+# Threading code, also not working right now
+#############################################
+
+
+# def load_pickles():
+#     global tfidf, logreg_imdb, logreg_rt, logreg_profit, xgbc_imdb, xgbc_rt, xgbc_profit
+
+#Thread(target=load_pickles).start()
+#load_pickles()
+
+# thread = Thread(target=load_pickles, args=())
+# thread.daemon = True
+# thread.start()
+
+
+
+
+######################################
 # DATABASE CODE - UNUSED AT THE MOMENT
+######################################
 
 #from flask_sqlalchemy import SQLAlchemy
 

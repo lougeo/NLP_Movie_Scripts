@@ -6,11 +6,146 @@
             Once you're done, test your script here: <br>
             <form action="/submit" method="post">
                 <input type="submit" value="Let's Go!">
-            </form><br><br>
-        </p>
+            </form>
+        </p><br><br>
         <h2>
-            Modeling Decisions
+            What's Included in the Models?
+        </h2>
+        <ul>
+            <li>The script</li>
+            <li>The genre of that scirpt</li>
+        </ul>
+        <p>
+            I included the genre in the data because it is an attribute of the script, but didn't want to include information such as Director, Actors/Actresses, etc.. because the models would likely over fit on those features (good directors tend to direct good movies).
+        </p><br><br>
+        <h2>
+            How Good are these Models?
         </h2><br>
+        <h4>
+            Both the Logistic Regression and XG Boost were tuned for several hyperparameters using 5 fold cross validated grid search. These are the average scores across the cross validation rounds.
+        </h4>
+        <p>Logistic Regression</p>
+        <table style="width:100%">
+            <tr>
+                <td></td>
+                <td>Train Accuracy (%)</td>
+                <td>Test Accuracy (%)</td>
+                <td>Baseline</td>
+            </tr>
+            <tr>
+                <td>IMDb Scores</td>
+                <td>67</td>
+                <td>63</td>
+                <td>57</td>
+            </tr>
+            <tr>
+                <td>Rotten Tomatoe Scores</td>
+                <td>69</td>
+                <td>58</td>
+                <td>43</td>
+            </tr>
+            <tr>
+                <td>Profit Margins</td>
+                <td>59</td>
+                <td>63</td>
+                <td>61</td>
+            </tr>
+        </table><br><br>
+        
+        <p>XG Boost</p>
+        <table style="width:100%">
+            <tr>
+                <td></td>
+                <td>Train Accuracy (%)</td>
+                <td>Test Accuracy (%)</td>
+                <td>Baseline</td>
+            </tr>
+            <tr>
+                <td>IMDb Scores</td>
+                <td>99</td>
+                <td>59</td>
+                <td>57</td>
+            </tr>
+            <tr>
+                <td>Rotten Tomatoe Scores</td>
+                <td>100</td>
+                <td>61</td>
+                <td>43</td>
+            </tr>
+            <tr>
+                <td>Profit Margins</td>
+                <td>100</td>
+                <td>59</td>
+                <td>61</td>
+            </tr>
+        </table><br><br>
+
+        <h2>What's going on under the hood?</h2><br>
+        <h3>
+            Legend:
+        </h3>
+        <ul>
+            <li>Capitalized words are genres (ex: Action)</li>
+            <li>Features with "Num_" are counts of parts of speech (ex: Num_VERB)</li>
+            <li>Groups of words, called ngrams, are included (ex: are included)</li>
+            <li>All ngrams, and other tokens are lower case</li>
+        </ul>
+        <table style="width:100%">
+            <tr>
+                <td>Comparing the <b>IMDb</b> Models:</td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="static/plots/imdb_logreg_full.png" alt="Logistic Regression IMDb">
+                </td>
+                <td>
+                    <img src="static/plots/imdb_xgbc_full.png" alt="XG Boost IMDb">
+                </td>
+            </tr>
+            <tr>
+                <td>Comparing the <b>Rotten Tomatoe</b> Models:</td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="static/plots/rt_logreg_full.png" alt="Logistic Regression Rotten Tomatoes">
+                </td>
+                <td>
+                    <img src="static/plots/rt_xgbc_full.png" alt="XG Boost Rotten Tomatoes">
+                </td>
+            </tr>
+            <tr>
+                <td>Comparing the <b>Profitability</b> Models:</td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="static/plots/profit_logreg_full.png" alt="Logistic Regression Profitability">
+                </td>
+                <td>
+                    <img src="static/plots/profit_xgbc_full.png" alt="XG Boost Profitability">
+                </td>
+            </tr>
+        </table>
+        <h2>
+            Other Modeling Decisions
+        </h2><br>
+        <p>
+            Choosing what's good and what's bad. <br><br>
+
+            Below are the disributions of the targets I am looking at: <br>
+            <img src="static/plots/imdb_hist.png" alt="IMDb histogram"> <br>
+            <img src="static/plots/rt_hist.png" alt="Rotten Tomatoes histogram"> <br>
+            <img src="static/plots/profit_hist.png" alt="Profit Margin histogram"> <br><br>
+            Here is my rational for the cutoffs: <br>
+            IMDb Score: <br>
+            Because the distribution is a nice and normal looking, I will categorize this variable at 0.70, which is right around both the mean and median. <br><br>
+
+            RT Score: <br>
+            It's interesting that this distribution is differenct from IMDbs, and gives me hope that there may be some insights to be gained here. Because this does not look like a normal distribution I'm going to split this at a more arbitrary value. Although RT classifies anything better than 60% as "fresh", we can see that there is a definite spike around 0.80, and the median score is 0.74. For this reason I will try a cutoff of 0.80, and reevaluate if necessary. <br><br>  
+
+            Percent Profit: <br>
+            Accoding to an article published in Gizmodo, they give a general rule of thumb stating that a movie must make twice it's budget in order to break even. I will therefore select 200% as the cutoff for the Percent Profit target variable. This also is close to the median, which is about 260%. <br>
+            https://io9.gizmodo.com/how-much-money-does-a-movie-need-to-make-to-be-profitab-5747305 <br>
+        </p>
         <p>
             I chose to run the targets against two different models: <br>
              - A Logistic Regression Model <br>
