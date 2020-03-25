@@ -1,7 +1,8 @@
-models
 plots
 .ipynb_checkpoints
 __pycache__
 venv
-models
 site.db
+models
+Notebooks/MISC.ipynb
+Notebooks/.ipynb_checkpoints
