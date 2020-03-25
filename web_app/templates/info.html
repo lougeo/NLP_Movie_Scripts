@@ -8,6 +8,23 @@
                 <input type="submit" value="Let's Go!">
             </form>
         </p><br><br>
+        <h2>What am I looking at?</h2><br>
+        <ul>
+            <li> The first graph is a histogram, and shows the number of times that a certain event happened in the data.</li> <br>
+            <li>For the second two graphs the values aren't that important, and all you really need to know is that the features with the highest values are deemed to be the most important for that model. For those who are curious I'll go into more detail further down the page.</li> 
+        </ul><br><br>
+        <h3>
+            Legend:
+        </h3>
+        <ul>
+            <li>Capitalized words are genres (ex: Action)</li>
+            <li>Features with "Num_" are counts of parts of speech (ex: Num_VERB)</li>
+            <li>Groups of words, called ngrams, are included (ex: two words)</li>
+            <li>All ngrams, and other regular words are lower case</li>
+        </ul>
+        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/16.embed"></iframe>
+        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/18.embed"></iframe>
+        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/20.embed"></iframe>
         <h2>
             What's Included in the Models?
         </h2>
@@ -79,62 +96,12 @@
                 <td>61</td>
             </tr>
         </table><br><br>
-
-        <h2>What's going on under the hood?</h2><br>
+        
         <h3>
-            Legend:
-        </h3>
-        <ul>
-            <li>Capitalized words are genres (ex: Action)</li>
-            <li>Features with "Num_" are counts of parts of speech (ex: Num_VERB)</li>
-            <li>Groups of words, called ngrams, are included (ex: are included)</li>
-            <li>All ngrams, and other tokens are lower case</li>
-        </ul>
-        <table style="width:100%">
-            <tr>
-                <td>Comparing the <b>IMDb</b> Models:</td>
-            </tr>
-            <tr>
-                <td>
-                    <img src="static/plots/imdb_logreg_full.png" alt="Logistic Regression IMDb">
-                </td>
-                <td>
-                    <img src="static/plots/imdb_xgbc_full.png" alt="XG Boost IMDb">
-                </td>
-            </tr>
-            <tr>
-                <td>Comparing the <b>Rotten Tomatoe</b> Models:</td>
-            </tr>
-            <tr>
-                <td>
-                    <img src="static/plots/rt_logreg_full.png" alt="Logistic Regression Rotten Tomatoes">
-                </td>
-                <td>
-                    <img src="static/plots/rt_xgbc_full.png" alt="XG Boost Rotten Tomatoes">
-                </td>
-            </tr>
-            <tr>
-                <td>Comparing the <b>Profitability</b> Models:</td>
-            </tr>
-            <tr>
-                <td>
-                    <img src="static/plots/profit_logreg_full.png" alt="Logistic Regression Profitability">
-                </td>
-                <td>
-                    <img src="static/plots/profit_xgbc_full.png" alt="XG Boost Profitability">
-                </td>
-            </tr>
-        </table>
-        <h2>
             Other Modeling Decisions
-        </h2><br>
-        <p>
-            Choosing what's good and what's bad. <br><br>
+        </h3><br><br>
 
-            Below are the disributions of the targets I am looking at: <br>
-            <img src="static/plots/imdb_hist.png" alt="IMDb histogram"> <br>
-            <img src="static/plots/rt_hist.png" alt="Rotten Tomatoes histogram"> <br>
-            <img src="static/plots/profit_hist.png" alt="Profit Margin histogram"> <br><br>
+        <p>
             Here is my rational for the cutoffs: <br>
             IMDb Score: <br>
             Because the distribution is a nice and normal looking, I will categorize this variable at 0.70, which is right around both the mean and median. <br><br>

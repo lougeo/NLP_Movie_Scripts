@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+import os
 import spacy
 import joblib
 from urllib.request import urlopen
@@ -17,7 +18,7 @@ from functions import script_input, genre_convert, pos_counter, my_preprocessor,
 
 # Initializing the app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '420SWED69'
+app.config['SECRET_KEY'] = "420SWED69"
 
 # Has to be defined in this file rather than functions file
 def merger(script, genre_info):
