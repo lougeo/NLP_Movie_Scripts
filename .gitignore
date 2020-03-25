@@ -4,5 +4,3 @@ __pycache__
 venv
 site.db
 models
-Notebooks/MISC.ipynb
-Notebooks/.ipynb_checkpoints
