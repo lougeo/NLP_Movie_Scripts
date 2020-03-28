@@ -4,3 +4,4 @@ __pycache__/
 venv/
 site.db
 models/
+extra_webapp_stuff/
