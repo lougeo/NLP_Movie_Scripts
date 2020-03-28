@@ -1,6 +1,6 @@
-plots
-.ipynb_checkpoints
-__pycache__
-venv
+plots/
+.ipynb_checkpoints/
+__pycache__/
+venv/
 site.db
-models
+models/
