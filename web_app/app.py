@@ -18,7 +18,7 @@ from functions import script_input, genre_convert, pos_counter, my_preprocessor,
 
 # Initializing the app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "420SWED69"
+app.config['SECRET_KEY'] = os.environ.get("GSBS_CONFIG")
 
 # Has to be defined in this file rather than functions file
 def merger(script, genre_info):
@@ -35,26 +35,16 @@ def merger(script, genre_info):
 
     return X_merged
 
-
-tfidf = joblib.load("static/models/full_tfidf_2.pkl")
-
-logreg_imdb = joblib.load("static/models/imdb_logreg_full.pkl")
-logreg_rt = joblib.load("static/models/rt_logreg_full.pkl")
-logreg_profit = joblib.load("static/models/profit_logreg_full.pkl")
-xgbc_imdb = joblib.load("static/models/imdb_xgbc_full.pkl")
-xgbc_rt = joblib.load("static/models/rt_xgbc_full.pkl")
-xgbc_profit = joblib.load("static/models/profit_xgbc_full.pkl")
-
 # s3 links
 # Loading in the pickles
-# tfidf = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/full_tfidf_2.pkl"))
+tfidf = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/tfidf_full.pkl"))
 
-# logreg_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_logreg_full.pkl"))
-# logreg_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_logreg_full.pkl"))
-# logreg_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_logreg_full.pkl"))
-# xgbc_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_xgbc_full.pkl"))
-# xgbc_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_xgbc_full.pkl"))
-# xgbc_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_xgbc_full.pkl"))
+logreg_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_logreg.pkl"))
+logreg_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_logreg.pkl"))
+logreg_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_logreg.pkl"))
+xgbc_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_xgbc.pkl"))
+xgbc_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_xgbc.pkl"))
+xgbc_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_xgbc.pkl"))
  
 
 # Home page
@@ -112,24 +102,30 @@ def submit():
 # Results page
 @app.route('/results', methods=["GET", "POST"])
 def results():
+    # Try condition which otherwise directs user to enter script
     try:
+        # Declaring some variables
         y = pd.read_csv('static/y_wt.csv')
+        scores_c = []
+        real_scores = []
+        verifier = 0
+
+        # Calculating the results
         scores = [logreg_imdb.predict_proba(df)[0] * 100,
                     logreg_rt.predict_proba(df)[0] * 100,
                     logreg_profit.predict_proba(df)[0] * 100,
                     xgbc_imdb.predict_proba(df)[0] * 100,
                     xgbc_rt.predict_proba(df)[0] * 100,
                     xgbc_profit.predict_proba(df)[0] * 100]
-        scores_c = []
-        real_scores = []
-        acc = []
-        verifier = 0
+        
+        # Checks if prediction is good or bad, and adds it to a list that will be accessible in the html
         for i in scores:
             if i[0] > i[1]:
                 scores_c.append(['BAD!', round(i[0])])
             else:
                 scores_c.append(['GOOD!', round(i[1])])
 
+        # Loop which checks if script entered is in my data set
         for i in y['titles']:
             if i == title:
                 verifier += 1
@@ -141,35 +137,10 @@ def results():
                 real_scores.append(rt_real)
                 real_scores.append(profit_real)
 
-                for i in [scores_c[0], scores[3]]:
-                    if (i[0] == "GOOD!") & (imdb_real >= 70):
-                        acc.append('Predicted: CORRECT!')
-                    elif (i[0] == "BAD!") & (imdb_real < 70):
-                        acc.append('Predicted: CORRECT!')
-                    else:
-                        acc.append('Predicted: WRONG!')
-                
-                for i in [scores_c[1], scores[4]]:
-                    if (i[0] == "GOOD!") & (rt_real >= 80):
-                        acc.append('Predicted: CORRECT!')
-                    elif (i[0] == "BAD!") & (rt_real < 80):
-                        acc.append('Predicted: CORRECT!')
-                    else:
-                        acc.append('Predicted: WRONG!')
-                
-                for i in [scores_c[2], scores[5]]:
-                    if (i[0] == "GOOD!") & (imdb_real >= 200):
-                        acc.append('Predicted: CORRECT!')
-                    elif (i[0] == "BAD!") & (imdb_real < 200):
-                        acc.append('Predicted: CORRECT!')
-                    else:
-                        acc.append('Predicted: WRONG!')
-
         if verifier == 0:
-            acc.append(['','','','','',''])
-            real_scores.append(['','','','','',''])
+            real_scores = ['N/A', 'N/A', 'N/A']
             
-        return render_template('results.html', title='Results Page', stitle=title, scores_c=scores_c, real_scores=real_scores, acc=acc)
+        return render_template('results.html', title='Results Page', stitle=title, scores_c=scores_c, real_scores=real_scores)
 
     except:
         return render_template('error.html', title='Error')
@@ -181,61 +152,3 @@ def error_page():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
-#############################################
-# Threading code, also not working right now
-#############################################
-
-
-# def load_pickles():
-#     global tfidf, logreg_imdb, logreg_rt, logreg_profit, xgbc_imdb, xgbc_rt, xgbc_profit
-
-#Thread(target=load_pickles).start()
-#load_pickles()
-
-# thread = Thread(target=load_pickles, args=())
-# thread.daemon = True
-# thread.start()
-
-
-
-
-######################################
-# DATABASE CODE - UNUSED AT THE MOMENT
-######################################
-
-#from flask_sqlalchemy import SQLAlchemy
-
-
-# # Initializing the db
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-# db = SQLAlchemy(app)
-
-# class Script_Data(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     genre1 = db.Column(db.Boolean)
-#     genre2 = db.Column(db.Boolean)
-#     title = db.Column(db.String)
-#     script = db.Column(db.String)
-
-#     def __repr__(self):
-#         return f"Script for: {self.title}"
-
-
-        # Sending the data to a database
-        # Not implemented yet
-        # post = Script_Data(genre1=form.genre1.data,
-        #                    genre2=form.genre2.data,
-        #                    title=form.title.data,
-        #                    script=form.script.data)
-        # db.session.add(post)
-        # db.session.commit()
-
-    # db.drop_all() 
-    # db.create_all()
-
-

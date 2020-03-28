@@ -1,5 +1,6 @@
 __pycache__
 vectorizer.py
+remodeling.py
+
 .gloudignore
 app.yaml
-models

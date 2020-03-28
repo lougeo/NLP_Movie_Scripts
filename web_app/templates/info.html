@@ -9,9 +9,21 @@
             </form>
         </p><br><br>
         <h2>What am I looking at?</h2><br>
+        <p>
+            Before beginning to build models around the scripts, I wanted to see if there were any distinct differences between the scripts that models would be able to pick up on. 
+            I therefore decided to start with some unsupervised learning techniques to investigate this. 
+            The method I used is called Latent Dirichlet Allocation (LDA), which is used to find common topics between text documents. 
+            I then wanted to visualize this, and used decomposition method called t-Distributed Stochastic Neighbor Embedding (t-SNE), which reduces the number of features down to a number which we can then plot and make sense of. 
+            I also had to group the resulting data set using KMeans to help with the visualization. 
+            Rational as to how many classes I chose is outlined in my notebooks, but in short it is based on the number of different genre classes. <br><br>
+            TLDR: These are clusters which an unsupervised model found with script tokens.
+        </p>
+        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/52.embed"></iframe>
+        <h2>What am I looking at now?</h2><br>
         <ul>
             <li> The first graph is a histogram, and shows the number of times that a certain event happened in the data.</li> <br>
-            <li>For the second two graphs the values aren't that important, and all you really need to know is that the features with the highest values are deemed to be the most important for that model. For those who are curious I'll go into more detail further down the page.</li> 
+            <li>For the second two graphs the values aren't that important, and all you really need to know is that the features with the highest values are deemed to be the most important for that model. 
+                For those who are curious I'll go into more detail further down the page.</li> 
         </ul><br><br>
         <h3>
             Legend:

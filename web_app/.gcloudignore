@@ -19,6 +19,4 @@ __pycache__/
 /setup.cfg
 
 vectorizer.py
-
-Procfile
-runtime.txt
+remodeling.py

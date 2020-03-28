@@ -25,7 +25,6 @@ def genre_convert(genre_info, df):
             df[i[0]] = 0
     return df
 
-# This section will count the POS HAS TO GO AFTER A DF WITH SCRIPT AND GENRES HAS BEEN CREATED
 def pos_counter(df):
     nlp = spacy.load("en_core_web_sm")
     # Initializing columns
@@ -61,7 +60,6 @@ def pos_counter(df):
     return df
 
 
-
 # Functions required for vectorizing
 def my_preprocessor(string):
     # removes all digits
@@ -85,20 +83,3 @@ def my_tokenizer(string):
             tokens.append(token.lemma_)
 
     return tokens
-
-
-# logreg_imdb.predict(X_merged)
-# logreg_rt.predict(X_merged)
-# logreg_profit.predict(X_merged)
-
-# logreg_imdb.predict_proba(X_merged)
-# logreg_rt.predict_proba(X_merged)
-# logreg_profit.predict_proba(X_merged)
-
-# xgbc_imdb.predict(X_merged)
-# xgbc_rt.predict(X_merged)
-# xgbc_profit.predict(X_merged)
-
-# xgbc_imdb.predict_proba(X_merged)
-# xgbc_rt.predict_proba(X_merged)
-# xgbc_profit.predict_proba(X_merged)
