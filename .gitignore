@@ -5,3 +5,4 @@ venv/
 site.db
 models/
 extra_webapp_stuff/
+Notebooks/.ipynb_checkpoints/
