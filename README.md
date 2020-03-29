@@ -69,6 +69,11 @@ All work done here can be found in the Visualization notebook, and the web_app f
 
 ### Plots
 
+<div>
+    <a href="https://plotly.com/~lougeo/52/?share_key=nYPNBdBaLZWJXo8iyBvZ9D" target="_blank" title="tSNE" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/52.png?share_key=nYPNBdBaLZWJXo8iyBvZ9D" alt="tSNE" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+    <script data-plotly="lougeo:52" sharekey-plotly="nYPNBdBaLZWJXo8iyBvZ9D" src="https://plotly.com/embed.js" async></script>
+</div>
+
 <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/52.embed"></iframe>
 <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/16.embed"></iframe>
 <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/18.embed"></iframe>
