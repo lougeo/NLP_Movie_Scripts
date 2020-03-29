@@ -68,18 +68,19 @@ Creating the web application:
 All work done here can be found in the Visualization notebook, and the web_app folder.
 
 ### Plots
-
-<div>
-    <a href="https://plotly.com/~lougeo/52/?share_key=nYPNBdBaLZWJXo8iyBvZ9D" target="_blank" title="tSNE" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/52.png?share_key=nYPNBdBaLZWJXo8iyBvZ9D" alt="tSNE" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-</div>
-<div>
-    <a href="https://plotly.com/~lougeo/16/?share_key=jLpxuaGbc0dO8vu5pKf8q2" target="_blank" title="IMDb" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/16.png?share_key=jLpxuaGbc0dO8vu5pKf8q2" alt="IMDb" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-</div>
-<div>
-    <a href="https://plotly.com/~lougeo/18/?share_key=N324MXHqZ4LrTJd2uZsXMq" target="_blank" title="RT" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/18.png?share_key=N324MXHqZ4LrTJd2uZsXMq" alt="RT" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-</div>
-<div>
-    <a href="https://plotly.com/~lougeo/20/?share_key=dSI5wVoe7m9Yuz8CNEEiXB" target="_blank" title="Profit" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/20.png?share_key=dSI5wVoe7m9Yuz8CNEEiXB" alt="Profit" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+<div align='center'>
+    <div>
+        <a href="https://plotly.com/~lougeo/52/?share_key=nYPNBdBaLZWJXo8iyBvZ9D" target="_blank" title="tSNE" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/52.png?share_key=nYPNBdBaLZWJXo8iyBvZ9D" alt="tSNE" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+    </div>
+    <div>
+        <a href="https://plotly.com/~lougeo/16/?share_key=jLpxuaGbc0dO8vu5pKf8q2" target="_blank" title="IMDb" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/16.png?share_key=jLpxuaGbc0dO8vu5pKf8q2" alt="IMDb" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+    </div>
+    <div>
+        <a href="https://plotly.com/~lougeo/18/?share_key=N324MXHqZ4LrTJd2uZsXMq" target="_blank" title="RT" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/18.png?share_key=N324MXHqZ4LrTJd2uZsXMq" alt="RT" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+    </div>
+    <div>
+        <a href="https://plotly.com/~lougeo/20/?share_key=dSI5wVoe7m9Yuz8CNEEiXB" target="_blank" title="Profit" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/20.png?share_key=dSI5wVoe7m9Yuz8CNEEiXB" alt="Profit" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+    </div>
 </div>
 
 ### Results
