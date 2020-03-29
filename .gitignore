@@ -1,10 +1,9 @@
 plots/
-.ipynb_checkpoints/
+.ipynb_checkpoints
 __pycache__/
 venv/
 models/
 extra_webapp_stuff/
-Notebooks/.ipynb_checkpoints/
 Notebooks/Report.ipynb 
 Notebooks/MISC.ipynb
 web_app/settings.py
