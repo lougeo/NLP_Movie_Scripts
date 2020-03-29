@@ -43,9 +43,9 @@ Engineering the targets involved:
 Modeling
  - I began by investigating the possibility of using Latent Dirichlet Allocation (LDA) with the hypothesis that they would group into topics representative of the various genres. This was then visualized as described below.
  - Optimization of hyper parameters for the Logisitic Regression, and XG Boost model was performed using sklearns grid search. Scores, and precision metrics were also recorded.
-  - I didn't optimize for any models other than these two because I was only looking for interpretability and comparing and contrasting the decisions made by these two models, rather than chipping away at the accuracy score.
-  - The Logistic Regression was tuned for penalty type, and C value.
-  - The XG Boost model was tuned for max depth, learning rate, and the number of estimators.
+     - I didn't optimize for any models other than these two because I was only looking for interpretability and comparing and contrasting the decisions made by these two models, rather than chipping away at the accuracy score.
+     - The Logistic Regression was tuned for penalty type, and C value.
+     - The XG Boost model was tuned for max depth, learning rate, and the number of estimators.
   
 All work done here can be found in the Feature Engineering, and Modeling notebooks.
 
