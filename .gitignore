@@ -5,4 +5,6 @@ venv/
 models/
 extra_webapp_stuff/
 Notebooks/.ipynb_checkpoints/
+Notebooks/Report.ipynb 
+Notebooks/MISC.ipynb
 web_app/settings.py
