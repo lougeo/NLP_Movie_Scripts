@@ -85,7 +85,7 @@ All work done here can be found in the Visualization notebook, and the web_app f
 
 ### Results
 
-<div align='center'>Logistic Regression Accuracy Scores</div>
+<div>Logistic Regression Accuracy Scores</div>
 
 |        |    train |     test | baseline |
 |:-------|---------:|---------:|---------:|
@@ -94,7 +94,7 @@ All work done here can be found in the Visualization notebook, and the web_app f
 | Profit | 0.59479  | 0.627706 |     0.61 |
 
 
-<div align='center'>Logistic Regression Precision Metrics</div>
+<div>Logistic Regression Precision Metrics</div>
 
 |    | target   |   class |   precision |   recall |   f1-score |   support |
 |---:|:---------|--------:|------------:|---------:|-----------:|----------:|
@@ -106,7 +106,7 @@ All work done here can be found in the Visualization notebook, and the web_app f
 |  5 | Profit   |       1 |    0.658654 | 0.901316 |   0.761111 |       152 |
 
 
-<div align='center'>XG Boost Accuracy Scores</div>
+<div>XG Boost Accuracy Scores</div>
 
 |        |   train |     test | baseline |
 |:-------|--------:|---------:|---------:|
@@ -115,7 +115,7 @@ All work done here can be found in the Visualization notebook, and the web_app f
 | Profit |       1 | 0.588745 |     0.61 |
      
 
-<div align='center'>XG Boost Precision Metrics</div>
+<div>XG Boost Precision Metrics</div>
 
 |    | target   |   class |   precision |   recall |   f1-score |   support |
 |---:|:---------|--------:|------------:|---------:|-----------:|----------:|
