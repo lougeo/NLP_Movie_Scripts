@@ -142,11 +142,11 @@ Having said that, there most certainly is opportunity for this kind of analysis 
 
 Moving forward here is a short bucket list of things which would improve this project:
  - Modeling
-  - Further optimize the models, potentially looking outside of the two used, to try to get better accuracy rather then interpretability.
-  - Build out a convolutional neural network.
+     - Further optimize the models, potentially looking outside of the two used, to try to get better accuracy rather then interpretability.
+     - Build out a convolutional neural network.
  - Web App
-  - Improve the design, and functionality of the website.
+     - Improve the design, and functionality of the website.
 All of the above would of course be made significantly more interesting with the availablilty of a more extensive, and complete data source.    
 
-Thanks for reading!
+Thanks for reading!    
 Louis
