@@ -1,6 +1,6 @@
 # Louis George
 ## Capstone Project for the BrainStation Data Science Diploma Program
-## [goodscriptbadscript.ca](https://www.goodscriptbadscript.ca)
+## [goodscriptbadscript.ca](http://www.goodscriptbadscript.ca)
 
 The goal of this project is to determine if it is possible to predict whether or not a movie will be successful based solely upon its script.    
 
