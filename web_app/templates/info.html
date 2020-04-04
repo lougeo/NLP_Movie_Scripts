@@ -13,20 +13,20 @@
             Before beginning to build models around the scripts, I wanted to see if there were any distinct differences between the scripts that models would be able to pick up on. 
             I therefore decided to start with some unsupervised learning techniques to investigate this. 
             The method I used is called Latent Dirichlet Allocation (LDA), which is used to find common topics between text documents. 
-            I then wanted to visualize this, and used decomposition method called t-Distributed Stochastic Neighbor Embedding (t-SNE), which reduces the number of features down to a number which we can then plot and make sense of. 
+            I then wanted to visualize this, and used a decomposition method called t-Distributed Stochastic Neighbor Embedding (t-SNE), which reduces the number of features down to a number which we can then plot and make sense of. 
             I also had to group the resulting data set using KMeans to help with the visualization. 
             Rational as to how many classes I chose is outlined in my notebooks, but in short it is based on the number of different genre classes. <br><br>
-            TLDR: These are clusters which an unsupervised model found with script tokens.
+            TLDR: These are clusters which an unsupervised model grouped the scripts into.
         </p>
         <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/52.embed"></iframe>
         <h2>What am I looking at now?</h2><br>
         <ul>
             <li> The first graph is a histogram, and shows the number of times that a certain event happened in the data.</li> <br>
-            <li>For the second two graphs the values aren't that important, and all you really need to know is that the features with the highest values are deemed to be the most important for that model. 
+            <li>For the horizontal bar charts, the values aren't that important, and all you really need to know is that the features with the highest values are deemed to be the most important for that model. 
                 For those who are curious I'll go into more detail further down the page.</li> 
         </ul><br><br>
         <h3>
-            Legend:
+            Token Legend:
         </h3>
         <ul>
             <li>Capitalized words are genres (ex: Action)</li>
@@ -34,25 +34,20 @@
             <li>Groups of words, called ngrams, are included (ex: two words)</li>
             <li>All ngrams, and other regular words are lower case</li>
         </ul>
-        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/16.embed"></iframe>
-        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/18.embed"></iframe>
-        <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/20.embed"></iframe>
+        <iframe width="900" height="1200" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/16.embed"></iframe>
+        <iframe width="900" height="1200" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/18.embed"></iframe>
+        <iframe width="900" height="1200" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/20.embed"></iframe>
         <h2>
             What's Included in the Models?
         </h2>
         <ul>
             <li>The script</li>
             <li>The genre of that scirpt</li>
-        </ul>
-        <p>
-            I included the genre in the data because it is an attribute of the script, but didn't want to include information such as Director, Actors/Actresses, etc.. because the models would likely over fit on those features (good directors tend to direct good movies).
-        </p><br><br>
+        </ul><br><br>
+
         <h2>
             How Good are these Models?
         </h2><br>
-        <h4>
-            Both the Logistic Regression and XG Boost were tuned for several hyperparameters using 5 fold cross validated grid search. These are the average scores across the cross validation rounds.
-        </h4>
         <p>Logistic Regression</p>
         <table style="width:100%">
             <tr>
@@ -109,6 +104,63 @@
             </tr>
         </table><br><br>
         
+        <p>Random Forest</p>
+        <table style="width:100%">
+            <tr>
+                <td></td>
+                <td>Train Accuracy (%)</td>
+                <td>Test Accuracy (%)</td>
+                <td>Baseline</td>
+            </tr>
+            <tr>
+                <td>IMDb Scores</td>
+                <td>89</td>
+                <td>61</td>
+                <td>57</td>
+            </tr>
+            <tr>
+                <td>Rotten Tomatoe Scores</td>
+                <td>100</td>
+                <td>62</td>
+                <td>43</td>
+            </tr>
+            <tr>
+                <td>Profit Margins</td>
+                <td>100</td>
+                <td>65</td>
+                <td>61</td>
+            </tr>
+        </table><br><br>
+
+        <p>ADA Boost</p>
+        <table style="width:100%">
+            <tr>
+                <td></td>
+                <td>Train Accuracy (%)</td>
+                <td>Test Accuracy (%)</td>
+                <td>Baseline</td>
+            </tr>
+            <tr>
+                <td>IMDb Scores</td>
+                <td>92</td>
+                <td>60</td>
+                <td>57</td>
+            </tr>
+            <tr>
+                <td>Rotten Tomatoe Scores</td>
+                <td>100</td>
+                <td>58</td>
+                <td>64</td>
+            </tr>
+            <tr>
+                <td>Profit Margins</td>
+                <td>100</td>
+                <td>59</td>
+                <td>61</td>
+            </tr>
+        </table><br><br>
+
+
         <h3>
             Other Modeling Decisions
         </h3><br><br>
@@ -126,11 +178,6 @@
             https://io9.gizmodo.com/how-much-money-does-a-movie-need-to-make-to-be-profitab-5747305 <br>
         </p>
         <p>
-            I chose to run the targets against two different models: <br>
-             - A Logistic Regression Model <br>
-             - A Gradient Boosting Model <br>
-            I chose to use these two models because they are relatively interpretable. The reason I chose to look at two models rather than simply the one with the best accuracy is because I am more interested in interpretability, and I think that it's interesting to compare the decisions made by the two models. <br> <br>
-
             Interpretability is important in the context of this project because I was never expecting to get great accuracy. This was expected due to (amoung other things): <br>
              - A plethora of confounding factors (Directors, Producers, Actors/Actresses, etc..). <br>
              - Several unresolvable, and major sources of bias, such as Survivorship Bias (only scripts which were made into movies where used to train the models). <br>
@@ -138,6 +185,8 @@
             Due to these limitations, and with the models only predicting marginally better than random, the fruit of this project takes the form of funny, and hopefully intriguing insights into how Natural Language Processing works. <br> <br>
 
             My goal with regards to this project was around the process, improving my coding, and to better understand the tools at my disposal for use in future projects. <br> <br>
+
+            To see the full report, please refer to the github repo linked below. <br><br>
 
             I'd like to give a big thank you to the educators at <a href="https://brainstation.io/">BrainStation</a> for their continued help over the past couple of months, this is really a project I wouldn't have even been able to think about building before my time there. <br>
             I would also like to thank <a href="https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g">Corey Schafer</a> for some excellent coding tutorials, in particular his Flask series, from which this styling is copypasta, and the rest heavily influenced. <br><br>

@@ -2,7 +2,77 @@
 
 {% block content %}
     <div class=content-section>
-        <h3>General Details:</h3>
+        <legend class="border-bottom mb-4">{{ stitle }}</legend><br>
+        <p>Results for IMDb:</p>
+        <table style="width:100%">
+            <tr>
+                <td>
+                    Most Accurate Model
+                </td>
+                <td>
+                    Real Score on IMDb
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ scores_c[0][1] }}% sure that it will be {{ scores_c[0][0]}}
+                </td>
+                <td>
+                    {{ real_scores[0] }}
+                </td>
+            </tr>
+        </table><br><br>
+
+
+        <p>Results for Rotten Tomatoes:</p>
+        <table style="width:100%">
+            <tr>
+                <td>
+                    Most Accurate Model
+                </td>
+                <td>
+                    Real Score on <br> Rotten Tomatoes
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    {{ scores_c[1][1] }}% sure that it will be {{ scores_c[1][0] }}
+                </td>
+                <td>
+                    {{ real_scores[1] }}
+                </td>
+            </tr>
+        </table><br><br>
+
+
+        <p>Will it be profitable?</p>
+        <table style="width:100%">
+            <tr>
+                <td>
+                    Most Accurate Model
+                </td>
+                <td>
+                    Real Profit Margin
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    {{ scores_c[2][1] }}% sure that it will be {{ scores_c[2][0]}}
+                </td>
+                <td>
+                    {{ real_scores[2] }}
+                </td>
+            </tr>
+        </table>
+
+        <br><br><br><br><br><br><br><br><br><br>
+
+
+
+        
+        <h3>Categorization:</h3>
         <p>What does good and bad mean for each category?</p>
         <p>Check out the info page to see why I chose these.</p>
         <table style="width:100%">
@@ -18,85 +88,5 @@
             </tr>
         </table><br>
         <p>NOTE: Real scores and the comparison are only available for movies that were in the data set which I assembled.</p><br><br>
-        <legend class="border-bottom mb-4">{{ stitle }}</legend><br>
-        <p>Results for IMDb:</p>
-        <table style="width:100%">
-            <tr>
-                <td>
-                    Logistic Regression
-                </td>
-                <td>
-                    XG Boost
-                </td>
-                <td>
-                    Real Score on IMDb
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{ scores_c[0][1] }}% sure that it will be {{ scores_c[0][0]}}
-                </td>
-                <td>
-                    {{ scores_c[3][1] }}% sure that it will be {{ scores_c[3][0]}}
-                </td>
-                <td>
-                    {{ real_scores[0] }}
-                </td>
-            </tr>
-        </table><br><br>
-        <p>Results for Rotten Tomatoes:</p>
-        <table style="width:100%">
-            <tr>
-                <td>
-                    Logistic Regression
-                </td>
-                <td>
-                    XG Boost
-                </td>
-                <td>
-                    Real Score on <br> Rotten Tomatoes
-                </td>
-            </tr>
-            <tr>
-            <tr>
-                <td>
-                    {{ scores_c[1][1] }}% sure that it will be {{ scores_c[1][0]}}
-                </td>
-                <td>
-                    {{ scores_c[4][1] }}% sure that it will be {{ scores_c[4][0]}}
-                </td>
-                <td>
-                    {{ real_scores[1] }}
-                </td>
-            </tr>
-            
-        </table><br><br>
-        <p>Will it be profitable?</p>
-        <table style="width:100%">
-            <tr>
-                <td>
-                    Logistic Regression
-                </td>
-                <td>
-                    XG Boost
-                </td>
-                <td>
-                    Real Profit Margin
-                </td>
-            </tr>
-            <tr>
-            <tr>
-                <td>
-                    {{ scores_c[2][1] }}% sure that it will be {{ scores_c[2][0]}}
-                </td>
-                <td>
-                    {{ scores_c[5][1] }}% sure that it will be {{ scores_c[5][0]}}
-                </td>
-                <td>
-                    {{ real_scores[2] }}
-                </td>
-            </tr>
-            
-        </table>
     </div>
 {% endblock content %}

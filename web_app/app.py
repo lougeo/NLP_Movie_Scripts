@@ -34,17 +34,14 @@ def merger(script, genre_info):
     X_merged = pd.concat([df_sgp.drop('script', axis=1).reset_index(drop=True), df_vecs], axis=1)
 
     return X_merged
-
+    
 # s3 links
 # Loading in the pickles
 tfidf = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/tfidf_full.pkl"))
 
-logreg_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_logreg.pkl"))
-logreg_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_logreg.pkl"))
-logreg_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_logreg.pkl"))
-xgbc_imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/imdb_xgbc.pkl"))
-xgbc_rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/rt_xgbc.pkl"))
-xgbc_profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/profit_xgbc.pkl"))
+imdb = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/full_imdb_logreg.pkl"))
+rt = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/full_rt_rf.pkl"))
+profit = joblib.load(urlopen("https://gsbs.s3.us-east-2.amazonaws.com/full_rt_rf.pkl"))
  
 
 # Home page
@@ -111,12 +108,9 @@ def results():
         verifier = 0
 
         # Calculating the results
-        scores = [logreg_imdb.predict_proba(df)[0] * 100,
-                    logreg_rt.predict_proba(df)[0] * 100,
-                    logreg_profit.predict_proba(df)[0] * 100,
-                    xgbc_imdb.predict_proba(df)[0] * 100,
-                    xgbc_rt.predict_proba(df)[0] * 100,
-                    xgbc_profit.predict_proba(df)[0] * 100]
+        scores = [imdb.predict_proba(df)[0] * 100,
+                  rt.predict_proba(df)[0] * 100,
+                  profit.predict_proba(df)[0] * 100]
         
         # Checks if prediction is good or bad, and adds it to a list that will be accessible in the html
         for i in scores:
