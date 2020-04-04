@@ -4,7 +4,7 @@
 
 The goal of this project is to determine if it is possible to predict whether or not a movie will be successful based solely upon its script.    
 
-Although writing quality is undoubetly a subjective measure, if you have targets upon which to base something as good or bad, you can do some statistics and hope to pick something out of the noise. I wasn't expecting to make any breakthroughs in the understanding of human subjectivity, and the focus of this project was on the process, improving my code, and becoming familiar with the tools at my disposal. As a result of this, I was more intereseted in comparing and contrasting two different models used, in order to gain some insight as to how they work. The two models I chose to compare were a linear model, in the form of Logistic Regression, and a decision tree, in the form of Gradient Boosting.      
+Although writing quality is undoubetly a subjective measure, if you have targets upon which to base something as good or bad, you can do some statistics and hope to pick something out of the noise. I wasn't expecting to make any breakthroughs in the understanding of human subjectivity, and the focus of this project was on the process, improving my code, and becoming familiar with the tools at my disposal. As a result of this, I was more intereseted in comparing and contrasting the most important features selected by the models used, in order to gain some insight as to how they work. The models which I chose to compare were: Logistic Regression, Random Forest, ADA Boost, and XG Boost.      
 
 This is a Natural Language Processing (NLP) project, where I analysed around a thousand movie scripts in search of relationships between them which could be used to make predictions on a given target. My target variables are: IMDb score, Rotten Tomatoes score, and Profitability (measured by total worldwide revenue / budget). NLP is the act of transforming human language into numbers, so that you can put those numbers into conventional models like you would with numeric data. The first way to do this, and the method which I used, is called vectorization. This process invovles creating vectors out of all of your documents according to certain rules, resulting in one really big table. Another way to do this, called word embeding, is how you turn your words into numbers if you're going to use a neural network, and results in a matrix of tables.
 
@@ -42,10 +42,11 @@ Engineering the targets involved:
 
 Modeling
  - I began by investigating the possibility of using Latent Dirichlet Allocation (LDA) with the hypothesis that they would group into topics representative of the various genres. This was then visualized as described below.
- - Optimization of hyper parameters for the Logisitic Regression, and XG Boost model was performed using sklearns grid search. Scores, and precision metrics were also recorded.
-     - I didn't optimize for any models other than these two because I was only looking for interpretability and comparing and contrasting the decisions made by these two models, rather than chipping away at the accuracy score.
-     - The Logistic Regression was tuned for penalty type, and C value.
-     - The XG Boost model was tuned for max depth, learning rate, and the number of estimators.
+ - Optimization of hyper parameters for the models was performed using sklearns grid search. Scores, and precision metrics were also recorded.
+  - The Logistic Regression model was optimized for penalty type, and C value.
+  - The Random Forest model was optimized for max depth, and number of estimators.
+  - The ADA Boost model was optimized for learning rate, and number of estimators.
+  - The XG Boost model was optimized for max depth, learning rate, and the number of estimators.
   
 All work done here can be found in the Feature Engineering, and Modeling notebooks.
 
@@ -68,24 +69,15 @@ Creating the web application:
 All work done here can be found in the Visualization notebook, and the web_app folder.
 
 ### Plots
-<div align='center'>
-    <div>
-        <a href="https://plotly.com/~lougeo/52/?share_key=nYPNBdBaLZWJXo8iyBvZ9D" target="_blank" title="tSNE" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/52.png?share_key=nYPNBdBaLZWJXo8iyBvZ9D" alt="tSNE" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-    </div>
-    <div>
-        <a href="https://plotly.com/~lougeo/16/?share_key=jLpxuaGbc0dO8vu5pKf8q2" target="_blank" title="IMDb" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/16.png?share_key=jLpxuaGbc0dO8vu5pKf8q2" alt="IMDb" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-    </div>
-    <div>
-        <a href="https://plotly.com/~lougeo/18/?share_key=N324MXHqZ4LrTJd2uZsXMq" target="_blank" title="RT" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/18.png?share_key=N324MXHqZ4LrTJd2uZsXMq" alt="RT" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-    </div>
-    <div>
-        <a href="https://plotly.com/~lougeo/20/?share_key=dSI5wVoe7m9Yuz8CNEEiXB" target="_blank" title="Profit" style="display: block; text-align: center;"><img src="https://plotly.com/~lougeo/20.png?share_key=dSI5wVoe7m9Yuz8CNEEiXB" alt="Profit" style="max-width: 100%;width: 800px;"  width="800" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-    </div>
-</div>
+
+<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/52.embed"></iframe>
+<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/16.embed"></iframe>
+<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/18.embed"></iframe>
+<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~lougeo/20.embed"></iframe>
 
 ### Results
 
-<div>Logistic Regression Accuracy Scores</div>
+<div align='center'>Logistic Regression Accuracy Scores</div>
 
 |        |    train |     test | baseline |
 |:-------|---------:|---------:|---------:|
@@ -93,8 +85,8 @@ All work done here can be found in the Visualization notebook, and the web_app f
 | RT     | 0.68741  | 0.558442 |     0.43 |
 | Profit | 0.59479  | 0.627706 |     0.61 |
 
-
-<div>Logistic Regression Precision Metrics</div>
+    
+<div align='center'>Logistic Regression Precision Metrics</div>
 
 |    | target   |   class |   precision |   recall |   f1-score |   support |
 |---:|:---------|--------:|------------:|---------:|-----------:|----------:|
@@ -105,8 +97,8 @@ All work done here can be found in the Visualization notebook, and the web_app f
 |  4 | Profit   |       0 |    0.347826 | 0.101266 |   0.156863 |        79 |
 |  5 | Profit   |       1 |    0.658654 | 0.901316 |   0.761111 |       152 |
 
-
-<div>XG Boost Accuracy Scores</div>
+     
+<div align='center'>XG Boost Accuracy Scores</div>
 
 |        |   train |     test | baseline |
 |:-------|--------:|---------:|---------:|
@@ -114,8 +106,8 @@ All work done here can be found in the Visualization notebook, and the web_app f
 | RT     |       1 | 0.580087 |     0.43 |
 | Profit |       1 | 0.588745 |     0.61 |
      
-
-<div>XG Boost Precision Metrics</div>
+    
+<div align='center'>XG Boost Precision Metrics</div>
 
 |    | target   |   class |   precision |   recall |   f1-score |   support |
 |---:|:---------|--------:|------------:|---------:|-----------:|----------:|
@@ -126,13 +118,59 @@ All work done here can be found in the Visualization notebook, and the web_app f
 |  4 | Profit   |       0 |    0.357143 | 0.253165 |   0.296296 |        79 |
 |  5 | Profit   |       1 |    0.662857 | 0.763158 |   0.70948  |       152 |
 
+    
+<div align='center'>Random Forest Accuracy Scores</div>
+
+|        |    train |     test | baseline |
+|:-------|---------:|---------:|---------:|
+| IMDb   | 0.892909 | 0.61039  |     0.57 |
+| RT     | 1        | 0.623377 |     0.43 |
+| Profit | 1        | 0.649351 |     0.61 |
+    
+    
+<div align='center'>Random Forest Precision Metrics</div>
+
+|    | target   |   class |   precision |   recall |   f1-score |   support |
+|---:|:---------|--------:|------------:|---------:|-----------:|----------:|
+|  0 | IMDb     |       0 |    0.6      | 0.216495 |   0.318182 |        97 |
+|  1 | IMDb     |       1 |    0.612245 | 0.895522 |   0.727273 |       134 |
+|  2 | RT       |       0 |    0.625668 | 0.873134 |   0.728972 |       134 |
+|  3 | RT       |       1 |    0.613636 | 0.278351 |   0.382979 |        97 |
+|  4 | Profit   |       0 |    0.444444 | 0.101266 |   0.164948 |        79 |
+|  5 | Profit   |       1 |    0.666667 | 0.934211 |   0.778082 |       152 |
+    
+    
+<div align='center'>ADA Boost Accuracy Scores</div>
+
+|        |    train |     test | baseline |
+|:-------|---------:|---------:|---------:|
+| IMDb   | 0.9233   | 0.601732 |     0.57 |
+| RT     | 1        | 0.575758 |     0.43 |
+| Profit | 0.723589 | 0.640693 |     0.61 |
+    
+    
+<div align='center'>ADA Boost Precision Metrics</div>
+
+|    | target   |   class |   precision |   recall |   f1-score |   support |
+|---:|:---------|--------:|------------:|---------:|-----------:|----------:|
+|  0 | IMDb     |       0 |    0.537313 | 0.371134 |   0.439024 |        97 |
+|  1 | IMDb     |       1 |    0.628049 | 0.768657 |   0.691275 |       134 |
+|  2 | RT       |       0 |    0.621622 | 0.686567 |   0.652482 |       134 |
+|  3 | RT       |       1 |    0.493976 | 0.42268  |   0.455556 |        97 |
+|  4 | Profit   |       0 |    0.433333 | 0.164557 |   0.238532 |        79 |
+|  5 | Profit   |       1 |    0.671642 | 0.888158 |   0.764873 |       152 |
+
 
 ### Interpretation of Results
 
 The main focus with regards to the interpretation of the results is, for me, the somewhat humerous comparison of the most important features, as displayed in the graphs. I have also included some tables above with accuracy, precision, recall, and other such metrics. These metrics were made using the hyper parameters of the best performing model in the 5 fold cross validated grid search. The precision and recall were relatively consistent between the two models, and there are only a few additional points I would like to make in regards to these metrics:    
- - With regards to the accuracy scores, both models were able to make the best predictions for the Rotten Tomatoes score, followed by IMDb, and finally Profitiability, whose results likely aren't significantly different then random (statistical test would be required). 
- - When looking at the IMDb, and Profitability scores, both models are significantly better at predicting whether a script will result in good scores, rather then bad scores. 
- - When looking at the Rotten Tomatoes scores, the opposite is true, and the models are better at detecting scripts which will result in bad movies rather than good ones. 
+ - With regards to the accuracy score:
+   - Logistic Regression performs the best targeting the IMDb score.
+   - Random Forest performs the best on both Rotten Tomatoes score, and Profitability.
+   - With only slight exception, the decision tree based models are overfitting.
+ - With regards to the other metrics:
+   - When looking at the IMDb, and Profitability scores, all models are significantly better at predicting whether a script will result in good scores, rather then bad scores. 
+   - When looking at the Rotten Tomatoes scores, the opposite is true, and the models are better at detecting scripts which will result in bad movies rather than good ones. 
 
 ### Considerations, and next steps
 
@@ -142,11 +180,11 @@ Having said that, there most certainly is opportunity for this kind of analysis 
 
 Moving forward here is a short bucket list of things which would improve this project:
  - Modeling
-     - Further optimize the models, potentially looking outside of the two used, to try to get better accuracy rather then interpretability.
-     - Build out a convolutional neural network.
+   - Further optimize the models, to try to get better accuracy rather then interpretability.
+   - Build out a neural network.
  - Web App
-     - Improve the design, and functionality of the website.
+   - Improve the design, and functionality of the website.
 All of the above would of course be made significantly more interesting with the availablilty of a more extensive, and complete data source.    
 
-Thanks for reading!    
+Thanks for reading!
 Louis
